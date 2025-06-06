@@ -66,27 +66,8 @@ decrypt(): Reverses the Caesar cipher encryption.
 
 copy(): Copies the password to the clipboard.
 
-📋 Example
-pgsql
-Αντιγραφή
-Επεξεργασία
-Password:      5gH#8z
-Encrypted:     8jK(Br
-Decrypted:     5gH#8z
-📄 License
-This project is open source and available under the MIT License.
-
 💡 Note
 Caesar cipher used here is for educational purposes only and not secure for real-world encryption.
-
-yaml
-Αντιγραφή
-Επεξεργασία
-
----
-
-Let me know if you’d like a `LICENSE` file or want this converted into a GitHub `README.md` upload.
-
 
 
 
