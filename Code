@@ -1,0 +1,154 @@
+import random
+from tkinter import *
+from tkinter.ttk import *
+import pyperclip
+
+
+screen = Tk()
+screen.configure(background="black")
+screen.geometry('500x100')
+screen.title("Password generator")
+screen.resizable(height=False, width=False)
+style = Style()
+
+letters ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+numbers ="0123456789"
+symbols ="!@#$%^&*"
+characters = letters + numbers + symbols
+
+def copy():
+    pyperclip.copy(e.get())
+
+
+
+def generate():
+    length = int(Cmx.get())
+    strength = choice.get()
+    password = ""
+
+    if strength == 1:
+        for i in range(length):
+            a = random.choice(letters)
+            password += a
+    elif strength == 2:
+        ln = letters + numbers
+        for i in range(length):
+            a = random.choice(ln)
+            password += a
+    elif strength == 3:
+        lns = letters + numbers + symbols
+        for i in range(length):
+            a = random.choice(lns)
+            password += a
+    e.delete(0, END)
+    e.insert(END, password)
+
+
+def encrypt():
+    shift = 3
+    password = e.get()
+    encr_password = ""
+
+    for i in password:
+        if i not in characters:
+            encr_password += i
+        else:
+            position = characters.index(i)#vriskei pou vriskete to i sto characters
+
+            new_position = (position + shift) % len(characters)
+            encr_password += characters[new_position]#pairnei to xarakthra pou vriskei stin thesi new_position
+
+        e1.delete(0, END)
+        e1.insert(0, encr_password)
+
+
+def decrypt():
+    shift = 3
+    password = e1.get()
+    dcr_password = ""
+
+    for i in password:
+        if i not in characters:
+            dcr_password += i
+        else:
+            position = characters.index(i)#vriskei pou vriskete to i sto characters
+
+            new_position = (position - shift) % len(characters)
+            dcr_password += characters[new_position]#pairnei to xarakthra pou vriskei stin thesi new_position
+
+        e2.delete(0, END)
+        e2.insert(0, dcr_password)
+
+
+
+
+
+lbl = Label(screen, text="Password", background="black", foreground="light blue")
+lbl.grid(row=0, column=1)
+
+lbl1 = Label(screen, text="Length", background="black", foreground="light blue")
+lbl1.grid(row=1, column=1)
+
+lbl2 = Label(screen, text="Encrypted password", background="black", foreground="light blue")
+lbl2.grid(row=2, column=1)
+
+lbl3 = Label(screen, text="Decrypted password", background="black", foreground="light blue")
+lbl3.grid(row=3, column=1)
+
+
+e = Entry(screen)
+e.grid(row=0, column=2)
+
+Cmx = Combobox(screen, state="readonly")# states = normal / readonly / disable
+Cmx['values'] = ("6", "8", "10")
+Cmx.grid(row=1, column=2)
+Cmx.current(1)
+
+e1 = Entry(screen)
+e1.grid(row=2, column=2)
+
+e2 = Entry(screen)
+e2.grid(row=3, column=2)
+
+
+choice = IntVar()
+choice.set(1)
+
+btn = Button(screen, text="Copy", command=copy)#, background="black", foreground="light blue")
+btn.grid(row=0, column=3)
+
+rb = Radiobutton(screen, text="Low", value=1, variable=choice)#, background="black", foreground="light blue")
+rb.grid(row=1, column=3)
+
+btn1 = Button(screen, text="Encrypt", command=encrypt)#, background="black", foreground="light blue")
+btn1.grid(row=2, column=3)
+
+btn2 = Button(screen, text="Decrypt", command=decrypt)#, background="black", foreground="light blue")
+btn2.grid(row=3, column=3)
+
+
+btn3 = Button(screen, text="Generate", command=generate)#, background="black", foreground="light blue")
+btn3.grid(row=0, column=4)
+
+rb1 = Radiobutton(screen, text="Medium", value=1, variable=choice)#, background="black", foreground="light blue")
+rb1.grid(row=1, column=4)
+
+
+rb2 = Radiobutton(screen, text="Strong", value=1, variable=choice) #, background="black", foreground="light blue"
+rb2.grid(row=1, column=5)
+
+
+
+
+
+#style.configure("Custom.TButton", font=("Helectica", 14), foreground="light blue", background="black", padding=10)
+
+#btn = Tk.Button(screen, text="Style Button", style="Custom.TButton")
+
+
+
+
+screen.mainloop()
+
+
+
